@@ -1,2 +1,2 @@
 # numerical-methods-in-physics
-Learning numerical methods used in physics and solving physics problems with numerical approach
+Learning numerical mathematics and methods used not only in physics and solving physics problems with numerical approach.
