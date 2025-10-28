@@ -63,11 +63,13 @@ for i in range(4, N+1):
     y_2.append(eigvals[2])
     y_3.append(eigvals[3])
 
-plt.scatter(x, y_0)
-plt.scatter(x, y_1)
-plt.scatter(x, y_2)
-plt.scatter(x, y_3)
-
+plt.scatter(x, y_0, label = r'$E_0$')
+plt.scatter(x, y_1, label = r'$E_1$')
+plt.scatter(x, y_2, label = r'$E_2$')
+plt.scatter(x, y_3, label = r'$E_3$')
+plt.xlabel(r'$N$')
+plt.ylabel(r'$E_j(N)$')
+plt.legend()
 plt.show()
 
 def convergence_test(y_0, y_1, y_2, y_3, tol1, tol2, tol3, tol4):
@@ -155,7 +157,7 @@ def elements_Hprime(N):
 
     return eigvals
 
-N = 1000
+N = 300
 
 eigvals = elements_Hprime(N)
 
@@ -195,8 +197,11 @@ for i in range(len(hbar)):
     y_2.append(eigvals[2])
     y_3.append(eigvals[3])
 
-plt.scatter(hbar, y_0)
-plt.scatter(hbar, y_1)
-plt.scatter(hbar, y_2)
-plt.scatter(hbar, y_3)
+plt.scatter(hbar, y_0, label = r'$E_0$')
+plt.scatter(hbar, y_1, label = r'$E_1$')
+plt.scatter(hbar, y_2, label = r'$E_2$')
+plt.scatter(hbar, y_3, label = r'$E_3$')
+plt.xlabel(r'$\hbar$')
+plt.ylabel(r'$E_j(\hbar)$')
+plt.legend()
 plt.show()
