@@ -98,7 +98,7 @@ def convergence_test(y_0, y_1, y_2, y_3, tol1, tol2, tol3, tol4):
             index_4 = i
             break
 
-    print((index_1+index_2+index_3+index_4)/4)
+    max(index_1,index_2,index_3,index_4)
 
 convergence_test(y_0, y_1, y_2, y_3, 10**(-5), 10**(-4), 10**(-4), 10**(-4))
 
