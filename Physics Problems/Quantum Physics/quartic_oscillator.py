@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.patches import Circle
 
 # constants
 M = 1
@@ -157,7 +158,8 @@ def elements_Hprime(N):
 
     return eigvals
 
-N = 300
+# N = 300
+N = 30
 
 eigvals = elements_Hprime(N)
 
@@ -205,3 +207,68 @@ plt.xlabel(r'$\hbar$')
 plt.ylabel(r'$E_j(\hbar)$')
 plt.legend()
 plt.show()
+
+# Gershgorin circles for Hprime
+
+N = 100
+
+distinct_colors = ['red', 'green', 'blue', 'purple', 'orange', 'cyan', 'magenta', 'yellow', 'black', 'brown']
+
+for i in range(6):
+
+    K_1 = hbar[i]*omega/4
+    K_2 = -a*hbar[i]/(4*M*omega)
+    K_3 = b*hbar[i]**2/(32*M**2*omega**2)
+
+    Hmn = np.zeros((N,N))
+
+    for m in range(0,N):
+        for n in range(0,N):
+            if m == n :
+                Hmn[m,n] = (
+                    (2*n+1)*(K_1+K_2)
+                    + K_3*(6*n**2+6*n+3)
+                )
+            elif m == n+2 :
+                Hmn[m,n] = (
+                    np.sqrt((n+1)*(n+2))*(K_3*(4*n+6)-K_1+K_2)
+                )
+            elif m == n-2:
+                Hmn[m,n] = (
+                    np.sqrt(n*(n-1))*(-K_1+K_2+K_3*(4*n-2))
+                )
+            elif m == n+4:
+                Hmn[m,n] = (
+                    K_3*np.sqrt((n+1)*(n+2)*(n+3)*(n+4))
+                )
+            elif m == n-4:
+                Hmn[m,n] = (
+                    K_3*np.sqrt(n*(n-1)*(n-2)*(n-3))
+                )
+
+    R = []
+    S = []
+
+    fig, ax = plt.subplots()
+    ax.set_aspect('equal')
+
+    for k in range(4):
+        R_k = 0
+        for j in range(4):
+            if k != j:
+                R_k += abs(Hmn[k,j])
+            else:
+                S.append(Hmn[k,j])
+        R.append(R_k)
+
+    colors = distinct_colors[:len(R)]
+
+    for idx, (r, s, color) in enumerate(zip(R, S, colors)):
+        circle = Circle((s, 0), r, color=color, fill=True, alpha=0.3, label=f"E_{idx+1}")
+        ax.add_patch(circle)
+
+    ax.legend()
+    ax.set_xlim(-0.75, 0.75)
+    ax.set_ylim(-0.75, 0.75)
+    ax.set_title(rf'$\hbar = {hbar[i]}$')
+    plt.show()
